@@ -1,0 +1,5 @@
+base:
+  '*':
+    - ssh
+    - edit
+    - git
