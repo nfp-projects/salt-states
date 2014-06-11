@@ -1,5 +1,5 @@
 #iptables config
-/etc/sysconfig/test:
+/etc/sysconfig/iptables:
   file.managed:
     - source: salt://iptables/firewall
     - user: root
