@@ -1,32 +1,51 @@
 # Generated from salt-master. Do not edit.
-{% if pillar['rules'].has_key('raw') %}
-# Raw-related rules:
+
+{%- set rules = {'raw': [], 'nat': [], 'filter': []} %}
+{%- for value in pillar %}
+{%- if 'iptables' in value %}
+{%- for fw_type in ['raw', 'nat', 'filter'] if fw_type in pillar[value] %}
+{%- for rule in pillar[value][fw_type] %}
+{%- do rules[fw_type].append(rule) %}
+{%- endfor%}
+{%- endfor%}
+{%- endif %}
+{%- endfor%}
+
+{%- if rules['raw'] %}
+# Raw-related rules
 *raw
 :PREROUTING ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
-{% for value in pillar['rules']['raw'] %}-A {{value}}
-{% endfor %}COMMIT
+{%- for value in rules['raw'] %}
+-A {{value}}
+{%- endfor %}
+COMMIT
 # End raw-related rules.
-{% endif %}
+{%- endif %}
 
-{% if pillar['rules'].has_key('nat') %}
-# Nat-related rules:
+{%- if rules['nat'] %}
+# Nat-related rules
 *nat
 :PREROUTING ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
-{% for value in pillar['rules']['nat'] %}-A {{value}}
-{% endfor %}COMMIT
+{%- for value in rules['nat'] %}
+-A {{value}}
+{%- endfor %}
+COMMIT
 # End nat-related rules.
-{% endif %}
+{%- endif %}
 
-{% if pillar['rules'].has_key('filter') %}
-# Filter-related rules:
+{%- if rules['filter'] %}
+# Filter-related rules
 *filter
 :INPUT DROP [0:0]
 :FORWARD DROP [0:0]
 :OUTPUT ACCEPT [0:0]
-{% for value in pillar['rules']['filter'] %}-A {{value}}
-{% endfor %}COMMIT
+{%- for value in rules['filter'] %}
+-A {{value}}
+{%- endfor %}
+COMMIT
 # End filter-related rules.
-{% endif %}
+{%- endif %}
+
