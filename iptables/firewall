@@ -2,7 +2,7 @@
 
 {%- set rules = {'raw': [], 'nat': [], 'filter': []} %}
 {%- for value in pillar %}
-{%- if 'iptables' in value %}
+{%- if 'iptables.' in value %}
 {%- for fw_type in ['raw', 'nat', 'filter'] if fw_type in pillar[value] %}
 {%- for rule in pillar[value][fw_type] %}
 {%- do rules[fw_type].append(rule) %}
@@ -11,7 +11,7 @@
 {%- endif %}
 {%- endfor%}
 
-{%- if rules['raw'] %}
+{% if rules['raw'] %}
 # Raw-related rules
 *raw
 :PREROUTING ACCEPT [0:0]
@@ -21,7 +21,7 @@
 {%- endfor %}
 COMMIT
 # End raw-related rules.
-{%- endif %}
+{% endif %}
 
 {%- if rules['nat'] %}
 # Nat-related rules
@@ -34,7 +34,7 @@ COMMIT
 {%- endfor %}
 COMMIT
 # End nat-related rules.
-{%- endif %}
+{% endif %}
 
 {%- if rules['filter'] %}
 # Filter-related rules
@@ -47,5 +47,5 @@ COMMIT
 {%- endfor %}
 COMMIT
 # End filter-related rules.
-{%- endif %}
+{% endif %}
 
