@@ -4,13 +4,17 @@ base:
     - edit
     - git
     - iptables
-  'role:router':
+  'roles:router':
     - match: grain
     - nginx
     - nginx.router
     - mine
-  'role:www':
+  'roles:www':
     - match: grain
     - nginx
     - nginx.www
     - mine
+  'roles:db':
+    - match: grain
+    - mysql
+    

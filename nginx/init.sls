@@ -8,6 +8,7 @@ nginx:
     - watch:
       - file: /etc/nginx/nginx.conf
       - file: /etc/nginx/conf.d/*
+      - pkg: {{ pillar['pkgs']['nginx'] }}
 
 /etc/nginx/nginx.conf:
   file.managed:
