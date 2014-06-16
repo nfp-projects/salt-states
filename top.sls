@@ -8,3 +8,9 @@ base:
     - match: grain
     - nginx
     - nginx.router
+    - mine
+  'role:www':
+    - match: grain
+    - nginx
+    - nginx.www
+    - mine
