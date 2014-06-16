@@ -1,4 +1,4 @@
 ssh/github*
-nginx/*.key
-nginx/*.csr
-nginx/*.crt
+nginx/router/*.key
+nginx/router/*.csr
+nginx/router/*.crt
