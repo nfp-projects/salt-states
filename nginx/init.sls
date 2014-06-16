@@ -4,6 +4,7 @@ nginx:
   service:
     - running
     - enable: True
+    - reload: True
     - watch:
       - file: /etc/nginx/nginx.conf
       - file: /etc/nginx/conf.d/*
@@ -11,6 +12,7 @@ nginx:
 /etc/nginx/nginx.conf:
   file.managed:
     - source: salt://nginx/nginx.conf
+    - template: jinja
     - mode: 644
     - user: root
     - group: root
