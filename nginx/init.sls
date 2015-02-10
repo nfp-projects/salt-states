@@ -6,8 +6,7 @@ nginx:
     - enable: True
     - reload: True
     - watch:
-      - file: /etc/nginx/nginx.conf
-      - file: /etc/nginx/conf.d/*
+      - file: /etc/nginx/*
       - pkg: {{ pillar['pkgs']['nginx'] }}
 
 /etc/nginx/nginx.conf:
@@ -28,3 +27,12 @@ nginx_group:
     - system: True
     - members:
       - nginx
+
+include:
+{% set roles = salt['grains.get']('roles', []) %}
+{% if 'router' in roles %}
+  - .router
+{% endif %}
+{% if 'www' in roles %}
+  - .www
+{% endif %}
