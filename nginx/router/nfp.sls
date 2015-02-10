@@ -8,9 +8,17 @@
     - user: root
     - group: root
 
-/etc/nginx/conf.d/nfp.is.key:
+/etc/nginx/nfp.is.key:
   file.managed:
     - source: salt://nginx/router/nfp.is.key
     - mode: 600
     - user: nginx
     - group: nginx
+
+/etc/nginx/nfp.is.crt:
+  file.managed:
+    - source: salt://nginx/router/nfp.is.crt
+    - mode: 600
+    - user: nginx
+    - group: nginx
+
