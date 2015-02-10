@@ -7,13 +7,12 @@ base:
   'roles:router':
     - match: grain
     - nginx
-    - nginx.router
     - mine
   'roles:www':
     - match: grain
     - nginx
-    - nginx.www
     - mine
+    - node
   'roles:db':
     - match: grain
     - mysql
