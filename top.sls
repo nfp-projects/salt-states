@@ -4,6 +4,7 @@ base:
     - edit
     - git
     - iptables
+    - hosts
   'roles:router':
     - match: grain
     - nginx
