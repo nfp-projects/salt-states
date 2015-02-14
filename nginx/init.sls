@@ -1,6 +1,16 @@
+nginx_repo:
+  file.managed:
+    - source: salt://nginx/nginx.repo
+    - name: /etc/yum.repos.d/nginx.repo
+    - user: root
+    - group: root
+    - mode: 644
+
 nginx:
   pkg.installed:
     - name: {{ pillar['pkgs']['nginx'] }}
+    - requires:
+      - file: nginx_repo
   service:
     - running
     - enable: True
@@ -16,6 +26,8 @@ nginx:
     - mode: 644
     - user: root
     - group: root
+    - requires:
+      - pkg: nginx
 
 nginx_user:
   user.present:
@@ -35,4 +47,7 @@ include:
 {% endif %}
 {% if 'www' in roles %}
   - .www
+{% endif %}
+{% if 'api' in roles %}
+  - .api
 {% endif %}

@@ -1,0 +1,11 @@
+{% set db = salt['mine.get']('roles:db', 'network.ip_addrs', expr_form='grain').items() %}
+{
+  "knex": {
+    "connection": {
+      "host": "{{ db[0][1][0] }}",
+      "user": "{{ salt['pillar.get']('postgres_users:api:user', 'nfp') }}",
+      "password": "{{ salt['pillar.get']('postgres_users:api:pass', 'nfp') }}",
+      "database": "{{ salt['pillar.get']('postgres_dbs:api:name', 'nfp') }}"
+    }
+  }
+}

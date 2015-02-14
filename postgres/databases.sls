@@ -1,12 +1,12 @@
 # State file for configuring postgres databases
 
-{% for database in pillar['postgres']['databases'] %}
-postgres-database-{{ database }}:
+{% for database in pillar['postgres_dbs'] %}
+postgres-database-{{ pillar['postgres_dbs'][database]['name'] }}:
   postgres_database.present:
-    - name: {{ database }}
-    - owner: {{ pillar['postgres']['databases'][database]['owner'] }}
+    - name: {{ pillar['postgres_dbs'][database]['name'] }}
+    - owner: {{ pillar['postgres_dbs'][database]['owner'] }}
     - runas: postgres
     - require:
-      - postgres_user: postgres-user-{{ pillar['postgres']['databases'][database]['owner'] }}
+      - postgres_user: postgres-user-{{ pillar['postgres_dbs'][database]['owner'] }}
 {% endfor %}
 

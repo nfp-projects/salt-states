@@ -5,6 +5,11 @@ base:
     - git
     - iptables
     - hosts
+  'roles:api':
+    - match: grain
+    - nodejs
+    - nginx
+    - mine
   'roles:router':
     - match: grain
     - nginx
@@ -13,8 +18,9 @@ base:
     - match: grain
     - nginx
     - mine
-    - node
   'roles:db':
     - match: grain
     - mysql
+    - postgres
+    - mine
     

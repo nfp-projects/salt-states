@@ -7,7 +7,7 @@
     - name: {{ pillar['pkgs']['php'][name] }}
 {% endfor %}
 
-{{ pillar['pkgs']['php-fpm'] }}:
+{{ pillar['pkgs']['php-fpm'] }}:
   pkg.installed:
     - name: {{ pillar['pkgs']['php-fpm'] }}
   service:
@@ -41,3 +41,4 @@
 # Include all nginx site states
 include:
   - .nfp
+  - .beta
