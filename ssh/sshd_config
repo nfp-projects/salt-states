@@ -11,6 +11,14 @@ PasswordAuthentication yes
 # no to disable s/key passwords
 ChallengeResponseAuthentication no
 
+# Kerberos options
+KerberosAuthentication yes
+#KerberosOrLocalPasswd yes
+KerberosTicketCleanup yes
+KerberosGetAFSToken yes
+#KerberosUseKuserok yes
+
+
 # GSSAPI options
 GSSAPIAuthentication yes
 GSSAPICleanupCredentials yes
