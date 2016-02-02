@@ -1,9 +1,3 @@
-# Hosts file managed by salt master.
-# Do not edit
-
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-10.0.0.10   api1 api.nfp.is
-10.0.0.20   www1 nfp.is
-10.0.0.30   db1 db1.nfp.is
-10.0.0.200  salt salt.nfp.is
+# Managed by Salt Master
+127.0.0.1   {{ salt['grains.get']('fqdn', '') }} {{ salt['grains.get']('host', '') }} localhost
+::1         {{ salt['grains.get']('fqdn', '') }} {{ salt['grains.get']('host', '') }} localhost

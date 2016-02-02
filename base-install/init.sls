@@ -1,5 +1,6 @@
-{% for package in pillar['pkgs']['base'] %}
-install-{{ package }}:
+install-base:
   pkg.installed:
-    - name: {{ package }}
+    - pkgs:
+{% for package in pillar['pkgs']['base'] %}
+      - {{ package }}
 {% endfor %}
