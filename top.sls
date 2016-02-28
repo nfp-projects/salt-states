@@ -5,6 +5,6 @@ base:
     - git
     - ad
     - minion
-  'roles:api':
+  'roles:master':
     - match: grain
     - nodejs
