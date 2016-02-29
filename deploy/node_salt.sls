@@ -49,6 +49,7 @@ service:
   cmd.run:
     - cwd: /home/node
     - name: forever restart {{ name }}
+    - user: node
     - require:
       - git: project
       - npm: npm
@@ -57,6 +58,6 @@ service:
       - git: project
       - npm: npm
       - file: config
-    - onlyif: runuser -l node -c 'forever list' | grep {{ name }}
+    - onlyif: forever list | grep {{ name }}
 
 
