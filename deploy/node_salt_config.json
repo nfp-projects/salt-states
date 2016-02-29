@@ -1,0 +1,14 @@
+{
+  "NODE_ENV": "production",
+  "server": {
+    "port": 4001
+  },
+  "bunyan": {
+    "name": "node_salt",
+    "streams": [{
+        "path": "/var/log/node/node_salt.log",
+        "level": "debug"
+      }
+    ]
+  }
+}
