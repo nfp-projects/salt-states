@@ -1,4 +1,6 @@
-{% set app = '/home/node/node_salt/index.js' %}
+{% set folder = '/root/node_salt' %}
+{% set app = folder + '/index.js' %}
+{% set user = 'root' %}
 {% set run = 'index.js' %}
 {% set name = 'node_salt' %}
 {% set log = '/var/log/node/salt_node.forever.log' %}
@@ -8,17 +10,17 @@
 project:
   git.latest:
     - name: https://github.com/nfp-projects/node_salt.git
-    - user: node
+    - user: {{ user }}
     - rev: master
-    - target: /home/node/node_salt
+    - target: {{ folder }}
     - force: True
     - force_checkout: True
     - force_reset: True
 
 npm:
   npm.bootstrap:
-    - name: /home/node/node_salt
-    - user: node
+    - name: {{ folder }}
+    - user: {{ user }}
     - onchanges:
       - git: project
     - require:
@@ -26,30 +28,28 @@ npm:
 
 config:
   file.managed:
-    - name: /home/node/node_salt/config/config.json
+    - name: {{ folder }}/config/config.json
     - source: salt://deploy/node_salt_config.json
     - mode: 600
-    - user: node
-    - group: node
+    - user: {{ user }}
+    - group: {{ user }}
     - template: jinja
     - require:
       - git: project
 
 startup:
   cmd.run:
-    - cwd: /home/node/node_salt
-    - name: forever-service install {{ name }} -r node --start -s {{ run }} -f " -o {{ log_out }} -e {{ log_err }}"
+    - cwd: {{ folder }}
+    - name: forever-service install {{ name }} --start -s {{ run }} -f " -o {{ log_out }} -e {{ log_err }}"
     - require:
       - git: project
       - npm: npm
       - file: config
-    - unless: runuser -l node -c 'forever list' | grep {{ name }}
+    - unless: forever list | grep {{ name }}
 
 service:
   cmd.run:
-    - cwd: /home/node
     - name: forever restart {{ name }}
-    - user: node
     - require:
       - git: project
       - npm: npm

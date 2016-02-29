@@ -1,4 +1,9 @@
 {
+  "projects": {
+    "node_salt": {
+      "master": "master01.nfp.local"
+    }
+  },
   "NODE_ENV": "production",
   "server": {
     "port": 4001
