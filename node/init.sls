@@ -41,3 +41,10 @@ node_group:
     - system: True
     - members:
       - node
+
+/var/log/node:
+  file.directory:
+    - user: node
+    - group: node
+    - mode: 755
+
