@@ -2,6 +2,13 @@ include:
   - base-install
   - hosts
 
+install-base-ad:
+  pkg.installed:
+    - pkgs:
+{% for package in pillar['pkgs']['ad'] %}
+      - {{ package }}
+{% endfor %}
+
 ad_join:
   cmd.run:
     - name: |
@@ -10,6 +17,7 @@ ad_join:
         net ads testjoin
     - require:
       - sls: base-install
+      - pkg: install-base-ad
       - sls: hosts
       - file: network_file
     - unless:

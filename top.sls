@@ -1,10 +1,19 @@
 base:
-  '*':
+  '*.nfp.*':
     - ssh
     - base-install
     - git
-    - ad
     - minion
+  '*.nfp.local':
+    - ad
+    - firewall
+  'roles:db':
+    - match: grain
+    - postgres
+  'roles:mail':
+    - match: grain
+    - postgres.install
+    - mail
   'roles:master':
     - match: grain
     - nodejs
