@@ -2,6 +2,9 @@
   "projects": {
     "node_salt": {
       "master": "master01.nfp.local"
+    },
+    "isaland_mail": {
+      "master": "www01.nfp.local"
     }
   },
   "NODE_ENV": "production",
