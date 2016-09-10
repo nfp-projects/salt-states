@@ -1,4 +1,5 @@
+deploy/isaland_mail_config.json
 ssh/github*
-nginx/router/*.key
-nginx/router/*.csr
-nginx/router/*.crt
+*.key
+*.csr
+*.crt
