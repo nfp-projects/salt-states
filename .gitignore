@@ -1,5 +1,6 @@
 deploy/isaland_mail_config.json
 ssh/github*
 *.key
+*.pub
 *.csr
 *.crt
