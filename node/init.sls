@@ -35,6 +35,26 @@ node_home:
     - require:
       - user: node_user
 
+/home/node/.ssh:
+  file.directory:
+    - user: node
+    - group: node
+    - mode: 600
+    - makedirs: True
+
+{% for file in ['config','github_id_rsa','github_id_rsa.pub'] %}
+
+/home/node/.ssh/{{ file }}:
+  file.managed:
+    - source: salt://ssh/{{ file }}
+    - mode: {{ '600' if file == 'github_id_rsa' else '644' }}
+    - user: node
+    - group: node
+    - require:
+      - file: /home/node/.ssh
+
+{% endfor %}
+
 node_group:
   group.present:
     - name: node
