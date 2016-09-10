@@ -9,15 +9,15 @@ nginx_repo:
 nginx:
   pkg.installed:
     - name: {{ pillar['pkgs']['nginx'] }}
-    - requires:
+    - require:
       - file: nginx_repo
-      service:
-        - running
-        - enable: True
-        - reload: True
-        - watch:
-          - file: /etc/nginx/*
-          - pkg: {{ pillar['pkgs']['nginx'] }}
+  service:
+    - running
+    - enable: True
+    - reload: True
+    - watch:
+      - file: /etc/nginx/*
+      - pkg: {{ pillar['pkgs']['nginx'] }}
 
 /etc/nginx/nginx.conf:
   file.managed:
@@ -26,7 +26,7 @@ nginx:
     - mode: 644
     - user: root
     - group: root
-    - requires:
+    - require:
       - pkg: nginx
 
 nginx_user:
@@ -41,3 +41,7 @@ nginx_group:
       - nginx
 
 include:
+{% set roles = salt['grains.get']('roles', []) %}
+{% if 'mail' in roles %}
+  - .mail
+{% endif %}
