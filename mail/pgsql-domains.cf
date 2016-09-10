@@ -1,0 +1,5 @@
+user={{ salt['pillar.get']('postgres_users:nfp_mail:user') }}
+password={{ salt['pillar.get']('postgres_users:nfp_mail:pass') }}
+dbname={{ salt['pillar.get']('postgres_dbs:nfp_mail:name') }}
+query = SELECT domain AS virtual FROM domains WHERE domain='%s'
+hosts=db.nfp.is
