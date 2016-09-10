@@ -21,8 +21,13 @@ ssh:
 /root/.ssh/{{ file }}:
   file.managed:
     - source: salt://ssh/{{ file }}
-    - mode: {{ '600' if file == 'github_id_rsa' else '644' }}
+    - mode: 600
     - user: root
     - group: root
 
 {% endfor %}
+
+{% set roles = salt['grains.get']('roles', []) %}
+{% if 'master' in roles %}
+  - .public
+{% endif %}

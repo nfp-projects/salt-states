@@ -1,0 +1,48 @@
+# Disable legacy (protocol version 1) support
+Protocol 2
+Port {{ salt['pillar.get']('master_ssh:port') }}
+PidFile /var/run/sshd-second.pid
+
+# Logging
+SyslogFacility AUTHPRIV
+#LogLevel INFO
+
+# Authentication:
+#PermitRootLogin yes
+PasswordAuthentication no
+AllowUsers root
+# no to disable s/key passwords
+ChallengeResponseAuthentication no
+
+
+RhostsAuthentication no
+RhostsRSAAuthentication no
+RSAAuthentication yes
+
+# HostKey rsa_public.key
+
+# Kerberos options
+#KerberosAuthentication yes
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+#KerberosGetAFSToken yes
+#KerberosUseKuserok yes
+
+
+# GSSAPI options
+#GSSAPIAuthentication yes
+#GSSAPICleanupCredentials yes
+
+UsePAM no
+
+# Accept locale-related environment variables
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+#AcceptEnv XMODIFIERS
+
+#Other settings
+UseDNS no
+
+# override default of no subsystems
+Subsystem	sftp	/usr/libexec/openssh/sftp-server
