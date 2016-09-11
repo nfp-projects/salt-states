@@ -29,5 +29,6 @@ ssh:
 
 {% set roles = salt['grains.get']('roles', []) %}
 {% if 'master' in roles %}
+include:
   - .public
 {% endif %}
