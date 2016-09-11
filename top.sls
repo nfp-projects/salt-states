@@ -7,7 +7,9 @@ base:
     - ssh
     - ad
   'roles:service':
+    - match: grain
     - firewall
+    - sel
   'roles:db':
     - match: grain
     - postgres
