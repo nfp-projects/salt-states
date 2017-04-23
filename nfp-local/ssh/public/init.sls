@@ -1,6 +1,6 @@
 /etc/ssh/sshd_config_public:
   file.managed:
-    - source: salt://ssh/public/sshd_config_public
+    - source: salt://nfp-local/ssh/public/sshd_config_public
     - template: jinja
     - mode: 644
     - user: root
@@ -8,21 +8,21 @@
 
 /usr/lib/systemd/system/sshd-second.service:
   file.managed:
-    - source: salt://ssh/public/sshd-second.service
+    - source: salt://nfp-local/ssh/public/sshd-second.service
     - mode: 600
     - user: root
     - group: root
 
 /root/deploy:
   file.managed:
-    - source: salt://ssh/public/deploy
+    - source: salt://nfp-local/ssh/public/deploy
     - mode: 700
     - user: root
     - group: root
 
 /root/.ssh/authorized_keys:
   file.managed:
-    - source: salt://ssh/public/authorized_keys
+    - source: salt://nfp-local/ssh/public/authorized_keys
     - template: jinja
     - mode: 600
     - user: root

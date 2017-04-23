@@ -1,6 +1,6 @@
 nginx_repo:
   file.managed:
-    - source: salt://nginx/nginx.repo
+    - source: salt://common/nginx/nginx.repo
     - name: /etc/yum.repos.d/nginx.repo
     - user: root
     - group: root
@@ -16,18 +16,7 @@ nginx:
     - enable: True
     - reload: True
     - watch:
-      - file: /etc/nginx/*
       - pkg: {{ pillar['pkgs']['nginx'] }}
-
-/etc/nginx/nginx.conf:
-  file.managed:
-    - source: salt://nginx/nginx.conf
-    - template: jinja
-    - mode: 644
-    - user: root
-    - group: root
-    - require:
-      - pkg: nginx
 
 nginx_user:
   user.present:
@@ -39,9 +28,3 @@ nginx_group:
     - system: True
     - members:
       - nginx
-
-include:
-{% set roles = salt['grains.get']('roles', []) %}
-{% if 'mail' in roles %}
-  - .mail
-{% endif %}

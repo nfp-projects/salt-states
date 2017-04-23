@@ -13,7 +13,7 @@ selinux_mode:
 
 /etc/selinux/config:
   file.managed:
-    - source: salt://sel/config
+    - source: salt://service/sel-config
     - mode: 644
     - user: root
     - group: root

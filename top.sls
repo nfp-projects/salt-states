@@ -1,22 +1,17 @@
 base:
   '*.nfp.*':
-    - minion
+    - nfp
   '*.nfp.local':
-    - git
-    - base-install
-    - ssh
-    - ad
+    - nfp-local
   'roles:service':
     - match: grain
-    - firewall
-    - sel
+    - service
   'roles:db':
     - match: grain
     - postgres
   'roles:mail':
     - match: grain
     - postgres.install
-    - nginx
     - mail
   'roles:www':
     - match: grain
@@ -24,3 +19,6 @@ base:
   'roles:master':
     - match: grain
     - node
+  'roles:lb':
+    - match: grain
+    - lb

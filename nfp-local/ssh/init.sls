@@ -4,7 +4,7 @@ ssh:
 
 /etc/ssh/sshd_config:
   file.managed:
-    - source: salt://ssh/sshd_config
+    - source: salt://nfp-local/ssh/sshd_config
     - mode: 644
     - user: root
     - group: root
@@ -20,7 +20,7 @@ ssh:
 
 /root/.ssh/{{ file }}:
   file.managed:
-    - source: salt://ssh/{{ file }}
+    - source: salt://nfp-local/ssh/{{ file }}
     - mode: 600
     - user: root
     - group: root

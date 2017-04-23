@@ -1,6 +1,14 @@
 include:
-  - base-install
-  - hosts
+  - nfp-local.base-install
+
+hosts:
+  file.managed:
+    - name: /etc/hosts
+    - source: salt://nfp-local/ad/hosts
+    - mode: 644
+    - user: root
+    - group: root
+    - template: jinja
 
 install-base-ad:
   pkg.installed:
@@ -16,9 +24,9 @@ ad_join:
         net ads join nfp.local -U {{ pillar['ad_noc']['user'] }}%{{ pillar['ad_noc']['password'] }}
         net ads testjoin
     - require:
-      - sls: base-install
+      - sls: nfp-local.base-install
       - pkg: install-base-ad
-      - sls: hosts
+      - file: hosts
       - file: network_file
     - unless:
       - net ads testjoin
@@ -31,7 +39,7 @@ winbind:
     - watch:
       - file: krb5
   require:
-    - sls: base-install
+    - sls: nfp-local.base-install
 
 nfp_home:
   file.directory:
@@ -63,7 +71,7 @@ sudoers:
 krb5:
   file.managed:
     - name: /etc/krb5.conf
-    - source: salt://ad/krb5.conf
+    - source: salt://nfp-local/ad/krb5.conf
     - user: root
     - group: root
     - mode: 644
@@ -74,7 +82,7 @@ krb5:
 network_file:
   file.managed:
     - name: /etc/sysconfig/network
-    - source: salt://ad/network
+    - source: salt://nfp-local/ad/network
     - user: root
     - group: root
     - mode: 644
