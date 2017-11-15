@@ -15,10 +15,8 @@ base:
     - mail
   'roles:www':
     - match: grain
-    - node
   'roles:master':
     - match: grain
-    - node
   'roles:lb':
     - match: grain
     - lb
