@@ -8,7 +8,7 @@ base:
     - service
   'roles:db':
     - match: grain
-    - postgres
+    - db
   'roles:mail':
     - match: grain
     - postgres.install
