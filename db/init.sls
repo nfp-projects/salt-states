@@ -2,7 +2,6 @@
 
 include:
   - .install
-  - .databases
 
 postgres-server:
   pkg.installed:
@@ -21,7 +20,7 @@ postgres-initdb:
   cmd.run:
     - cwd: /
     - user: root
-    - name: /usr/pgsql-9.5/bin/postgresql95-setup initdb
+    - name: /usr/pgsql-10/bin/postgresql-10-setup initdb
     - unless: test -f {{ salt['pillar.get']('pkgs:postgres:config') }}
     - require_in:
       - service: postgres-server
@@ -31,7 +30,7 @@ postgres-initdb:
 postgres-path:
   file.append:
     - name: /etc/bashrc
-    - text: PATH=/usr/pgsql-9.5/bin/:$PATH
+    - text: PATH=/usr/pgsql-10/bin/:$PATH
 
 postgres-config:
   file.blockreplace:
@@ -46,9 +45,18 @@ postgres-config:
 postgres-pg_hba:
   file.managed:
     - name: {{ salt['pillar.get']('pkgs:postgres:hba') }}
-    - source: salt://postgres/pg_hba.conf
+    - source: salt://db/pg_hba.conf
     - template: jinja
     - mode: 600
     - user: postgres
     - group: postgres
+
+postgres-user-password:
+  postgres_user.present:
+    - name: postgres
+    - createdb: False
+    - password: {{ pillar['postgres_password'] }}
+    - require:
+      - service: postgres-server
+      - pkg: postgres-server
 

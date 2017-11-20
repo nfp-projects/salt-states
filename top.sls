@@ -9,10 +9,6 @@ base:
   'roles:db':
     - match: grain
     - db
-  'roles:mail':
-    - match: grain
-    - postgres.install
-    - mail
   'roles:www':
     - match: grain
   'roles:master':
