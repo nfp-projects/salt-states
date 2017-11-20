@@ -17,3 +17,20 @@ docker:
     - reload: True
     - watch:
       - pkg: docker-engine
+
+python-setuptools:
+  pkg.installed: []
+
+pip-install:
+  cmd.run:
+    - name: easy_install pip
+    - require:
+      - pkg: python-setuptools
+
+docker-py:
+  cmd.run:
+    - name: pip install docker-py>=1.4.0 # installs 1.8.1 by default
+    - reload_modules: True
+    - require:
+      - cmd: pip-install
+

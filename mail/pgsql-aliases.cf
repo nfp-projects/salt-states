@@ -1,7 +1,0 @@
-user={{ salt['pillar.get']('postgres_users:nfp_mail:user') }}
-password={{ salt['pillar.get']('postgres_users:nfp_mail:pass') }}
-dbname={{ salt['pillar.get']('postgres_dbs:nfp_mail:name') }}
-table=aliases
-select_field=alias
-where_field=email
-hosts=db.nfp.is

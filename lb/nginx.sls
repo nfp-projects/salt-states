@@ -7,7 +7,7 @@ config_files:
     - rev: master
     - target: /etc/nginx/config
     - identity: "/root/.ssh/github_id_rsa"
-    - force: True
+    - force_fetch: True
     - force_checkout: True
     - force_reset: True
   require:
@@ -19,6 +19,11 @@ config_files:
     - force: true
     - onchanges:
       - git: config_files
+
+/etc/nginx/certs:
+  file.recurse:
+    - source: salt://lb/certs
+    - include_empty: True
 
 check_config:
   cmd.run:

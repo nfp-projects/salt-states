@@ -17,6 +17,9 @@ base:
     - match: grain
   'roles:master':
     - match: grain
+  'roles:docker':
+    - match: grain
+    - docker
   'roles:lb':
     - match: grain
     - lb
