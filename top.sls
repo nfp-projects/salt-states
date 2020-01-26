@@ -1,7 +1,6 @@
 base:
-  '*.nfp.*':
+  '*':
     - nfp
-  '*.nfp.local':
     - nfp-local
   'roles:service':
     - match: grain

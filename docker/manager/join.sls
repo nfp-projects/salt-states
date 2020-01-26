@@ -9,4 +9,4 @@ join cluster:
   cmd.run:
     - name: 'docker swarm join --token {{ join_token }} {{ join_ip }}:2377'
     - require:
-      - pkg: docker-engine
+      - pkg: docker-ce

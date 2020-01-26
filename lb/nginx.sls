@@ -12,6 +12,7 @@ config_files:
     - force_reset: True
   require:
     - sls: common.nginx
+    - file: /etc/nginx/certs
 
 /etc/nginx/nginx.conf:
   file.copy:
@@ -19,17 +20,23 @@ config_files:
     - force: true
     - onchanges:
       - git: config_files
+    - watch_in:
+      - service: nginx
 
 /etc/nginx/certs:
   file.recurse:
     - source: salt://lb/certs
     - include_empty: True
+    - require_in:
+      - service: nginx
+    - watch_in:
+      - service: nginx
 
 check_config:
   cmd.run:
     - name: nginx -t
     - watch:
       - file: /etc/nginx/nginx.conf
-    - watch_in:
+    - require_in:
       - service: nginx
 

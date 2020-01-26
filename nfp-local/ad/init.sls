@@ -20,24 +20,22 @@ install-base-ad:
 ad_join:
   cmd.run:
     - name: |
-        authconfig --disablecache --enablewinbind --enablewinbindauth --smbsecurity=ads --smbworkgroup=NFP --smbrealm={{ pillar['ad']['realm'] }} --enablewinbindusedefaultdomain --winbindtemplatehomedir={{ pillar['ad']['homedir'] }}/%U --winbindtemplateshell={{ pillar['ad']['shell'] }} --enablelocauthorize --disablekrb5 --enablemkhomedir --enablepamaccess --updateall
-        net ads join nfp.local -U {{ pillar['ad_noc']['user'] }}%{{ pillar['ad_noc']['password'] }}
-        net ads testjoin
+        echo {{ pillar['ad_noc']['password'] }}| realm join {{ pillar['ad']['domain'] }} -U {{ pillar['ad_noc']['user'] }}
+        id noc@nfp.local
     - require:
       - sls: nfp-local.base-install
       - pkg: install-base-ad
       - file: hosts
-      - file: network_file
+#      - file: network_file
     - unless:
-      - net ads testjoin
+      - id noc@nfp.local
 
-winbind:
+sssd:
   service:
     - running
     - enable: True
-    - reload: True
     - watch:
-      - file: krb5
+      - file: sssd_conf
   require:
     - sls: nfp-local.base-install
 
@@ -68,17 +66,18 @@ sudoers:
   require:
     - cmd: ad_join
 
-krb5:
+sssd_conf:
   file.managed:
-    - name: /etc/krb5.conf
-    - source: salt://nfp-local/ad/krb5.conf
+    - name: /etc/sssd/sssd.conf
+    - source: salt://nfp-local/ad/sssd.conf
     - user: root
     - group: root
-    - mode: 644
+    - mode: 600
     - template: jinja
   require:
     - cmd: ad_join
 
+{#
 network_file:
   file.managed:
     - name: /etc/sysconfig/network
@@ -87,4 +86,5 @@ network_file:
     - group: root
     - mode: 644
     - template: jinja
+    #}
 

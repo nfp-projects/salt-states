@@ -1,14 +1,14 @@
 docker_repo:
   file.managed:
-    - source: salt://docker/docker.repo
-    - name: /etc/yum.repos.d/docker.repo
+    - source: salt://docker/docker-ce.repo
+    - name: /etc/yum.repos.d/docker-ce.repo
     - user: root
     - group: root
     - mode: 644
 
 docker:
   pkg.installed:
-    - name: docker-engine
+    - name: docker-ce
     - require:
       - file: docker_repo
   service:
@@ -16,7 +16,7 @@ docker:
     - enable: True
     - reload: True
     - watch:
-      - pkg: docker-engine
+      - pkg: docker-ce
 
 python-setuptools:
   pkg.installed: []

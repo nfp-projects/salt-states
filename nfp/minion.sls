@@ -1,3 +1,4 @@
+{#
 minion_id:
   file.managed:
     - name: /etc/salt/minion_id
@@ -6,6 +7,7 @@ minion_id:
     - user: root
     - group: root
     - template: jinja
+#}
 
 salt-minion:
   pkg.latest:
@@ -16,4 +18,4 @@ salt-minion:
     - reload: True
     - watch:
       - pkg: salt-minion
-      - file: minion_id
+      #      - file: minion_id
