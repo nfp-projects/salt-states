@@ -1,5 +1,6 @@
 include:
   - common.nginx
+  - common.git
 
 config_files:
   git.latest:
@@ -12,6 +13,7 @@ config_files:
     - force_reset: True
   require:
     - sls: common.nginx
+    - sls: common.git
     - file: /etc/nginx/certs
 
 /etc/nginx/nginx.conf:

@@ -9,6 +9,7 @@ nginx_repo:
 nginx:
   pkg.installed:
     - name: {{ pillar['pkgs']['nginx'] }}
+    - fromrepo: nginx-stable
     - require:
       - file: nginx_repo
   service:

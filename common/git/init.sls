@@ -1,10 +1,14 @@
+git:
+  pkg.installed:
+    - name: {{ pillar['pkgs']['git'] }}
+
 ssh:
   pkg.installed:
     - name: {{ pillar['pkgs']['ssh'] }}
 
 /etc/ssh/sshd_config:
   file.managed:
-    - source: salt://nfp-local/ssh/sshd_config
+    - source: salt://common/git/sshd_config
     - mode: 644
     - user: root
     - group: root
@@ -20,7 +24,7 @@ ssh:
 
 /root/.ssh/{{ file }}:
   file.managed:
-    - source: salt://nfp-local/ssh/{{ file }}
+    - source: salt://common/git/{{ file }}
     - mode: 600
     - user: root
     - group: root
